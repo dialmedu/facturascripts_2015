@@ -1,0 +1,3 @@
+[submodule "plugins/facturacion_base"]
+	path = plugins/facturacion_base
+	url = git@github.com:NeoRazorX/facturacion_base.git
