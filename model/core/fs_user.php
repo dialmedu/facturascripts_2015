@@ -155,7 +155,7 @@ class fs_user extends \fs_model
          $this->last_browser = $a['last_browser'];
          $this->fs_page = $a['fs_page'];
          
-         $this->css = 'view/css/bootstrap-yeti.min.css';
+         $this->css = 'bootstrap-yeti.min.css';
          if( isset($a['css']) )
          {
             $this->css = $a['css'];
@@ -174,7 +174,7 @@ class fs_user extends \fs_model
          $this->last_ip = NULL;
          $this->last_browser = NULL;
          $this->fs_page = NULL;
-         $this->css = 'view/css/bootstrap-yeti.min.css';
+         $this->css = 'bootstrap-yeti.min.css';
       }
       
       $this->logged_on = FALSE;
@@ -214,6 +214,33 @@ class fs_user extends \fs_model
       }
       else
          return 'index.php?page=admin_user&snick='.$this->nick;
+   }
+
+   public function check_css_is_path(){
+      $mystyle = $this->css;
+      $slash = '/';
+      $have_slash = strpos($mystyle, $slash);
+
+      if ($have_slash!==FALSE && $this->check_file_exists($mystyle)) {
+         return TRUE;
+      }
+      return FALSE;
+   }
+
+   private function check_file_exists($filename){
+        $path_relative = $filename;
+        $path_absolute = FS_PATH.$filename;
+
+        if (file_exists($path_relative)) {
+          $this->css = $path_relative;
+          return  TRUE;
+        }
+        else if (file_exists($path_absolute)) {
+          $this->css = $path_absolute;
+          return  TRUE;
+        }
+        $this->css = 'bootstrap-yeti.min.css';
+        return FALSE;
    }
    
    /**
